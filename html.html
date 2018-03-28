@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- <script src="../my-project/node_modules/vue/dist/vue.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<style>
+  table {
+    border: solid 1px black;
+    border-collapse: collapse;
+    
+  }
+
+  th,
+  td {
+    border: solid 1px black;
+    text-align: center;
+    padding:10px;
+  }
+</style>
+
+<body>
+  <div id="d1">
+
+    <table>
+      <tr>
+        <td>姓名:</td>
+        <td>
+          <input type="text" v-model="user.name">
+        </td>
+      </tr>
+      <tr>
+        <td>年龄:</td>
+        <td>
+          <input type="text" v-model="user.age">
+        </td>
+      </tr>
+      <tr>
+        <td>地址:</td>
+        <td>
+          <input type="text" v-model="user.address">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button @click="add">添加</button>
+        </td>
+      </tr>
+    </table>
+    <hr>
+    <table>
+
+      <tr>
+        <td>序号</td>
+        <td>姓名</td>
+        <td>年龄</td>
+        <td>地址</td>
+        <td>删除</td>
+      </tr>
+      <tr v-for="(item,index) in user2">
+        <td>{{index+1}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.age}}</td>
+        <td>{{item.address}}</td>
+        <td>
+          <button @click="nowindex=index;dele()">删除</button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <button @click="nowindex=-1;dele()">批量删除</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+
+
+<script>
+  new Vue({
+    el: "#d1",
+    data: {
+      nowindex: -1,
+      user: {},
+      user2: [
+        { "name": "赵四", "age": 12, "address": "武汉" },
+        { "name": "王君乐", "age": 15, "address": "北京" },
+        { "name": "吴玉华", "age": 18, "address": "深圳" },
+        { "name": "刘思", "age": 22, "address": "上海" },
+      ]
+    },
+    methods: {
+      add() {
+        //在方法里面获取vue的变量，需要通过对象获取
+        this.user2.push(this.user);
+        this.user = {};
+      },
+      dele() {
+        if (this.nowindex == -1) {
+          this.user2 = [];
+        }
+        else {
+          this.user2.splice(this.nowindex, 1);
+        }
+      }
+    }
+  })
+</script>
+
+</html>
